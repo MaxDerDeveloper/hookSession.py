@@ -78,14 +78,17 @@ def hookSession(old_session:requests.Session, new_sock:socket.socket, scheme:str
 	return new_session
 
 if __name__ == '__main__':
-	# Create new socket, to be inserted
-	new_sockeet = socket.create_connection(("api.ipify.org", 80))
-
+	
 	# Create copy of session and swap socket
 	old_session = requests.Session()
+
+	# Create new socket, to be inserted
+	new_socket  = socket.create_connection(("api.ipify.org", 80))
+
+	# Call method and create new Session object
 	new_session = hookSession(old_session, new_sockeet)
 	
-	### Lets test it!
+	### Lets test now!
 	# Initally, we send a request to google's servers,
 	# but we exchange the session's socket, so our request
 	# will be sent to the ipify.org servers instead.
